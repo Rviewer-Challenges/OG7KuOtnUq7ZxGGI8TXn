@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rssreader/views/screens/settings.dart';
+import 'package:rssreader/views/widgets/feed_item.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -16,6 +17,14 @@ class _HomeState extends State<Home> {
     setState(() {
       tabIndex = index;
       switch (index) {
+        case 0:
+          contentBody = ListView.separated(
+            itemCount: 10,
+            itemBuilder: (BuildContext context, int index) => const FeedItem(),
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
+          );
+          break;
         case 2:
           contentBody = const SettingsScreen();
           break;
