@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rssreader/config/sources_config.dart';
 import 'package:rssreader/config/theme_data.dart';
+import 'package:rssreader/providers/setting_preferences.dart';
 
-import '../../providers/theme.dart';
+import '../../models/source.dart';
+import '../../providers/theme_provider.dart';
+import '../../config/sources_config.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -12,14 +16,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool isDark = false;
-  final Map<String, bool> _sources = {
-    'Source 1': true,
-    'Source 2': false,
-    'Source 3': false,
-    'Source 4': false,
-    'Source 5': false,
-    'Source 6': false
+  SettingPreferences settings = SettingPreferences();
+  final Map<String, SourceFeed> _sources = <String, SourceFeed>{
+    for (SourceFeed src in sourcesConfig) src.name: src
   };
   @override
   Widget build(BuildContext context) {
@@ -33,6 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: _themeSwitch(theme),
         ),
         _currentSources(),
+        TextButton(onPressed: settings.restore, child: Text('Restaurar')),
       ],
     );
   }
@@ -43,11 +43,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       children: [
         const Text('Dark mode'),
         Switch(
-          value: isDark,
+          value: settings.darkMode,
           onChanged: (bool? value) {
-            isDark = value ?? false;
-            theme.setThemeData(
-                isDark ? BrandThemeData.dark() : BrandThemeData.light());
+            settings.darkMode = value ?? false;
+            theme.setThemeData(settings.darkMode
+                ? BrandThemeData.dark()
+                : BrandThemeData.light());
           },
         ),
       ],
@@ -61,17 +62,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Text('SOURCES'),
+            const Text('SOURCES'),
             for (var name in names)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(name),
                   Switch(
-                    value: _sources[name]!,
+                    value: _sources[name]!.active,
                     onChanged: (bool active) {
                       setState(() {
-                        _sources[name] = !_sources[name]!;
+                        settings.setSourceFeed(_sources[name]!.url, active);
+                        _sources[name]?.active = active;
                       });
                     },
                   )

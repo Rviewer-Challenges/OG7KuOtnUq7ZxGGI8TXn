@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rssreader/views/screens/main_feeds.dart';
 import 'package:rssreader/views/screens/settings.dart';
-import 'package:rssreader/views/widgets/feed_item.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,25 +12,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Widget contentBody = Container();
   int tabIndex = 0;
+  PageController controller = PageController(initialPage: 0);
+
+  List<Widget> pages = [MainFeedsScreen(), Container(), const SettingsScreen()];
 
   void _bodyChange(int index) {
     setState(() {
       tabIndex = index;
-      switch (index) {
-        case 0:
-          contentBody = ListView.separated(
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) => const FeedItem(),
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-          );
-          break;
-        case 2:
-          contentBody = const SettingsScreen();
-          break;
-        default:
-          contentBody = Container();
-      }
+      controller.jumpToPage(index);
     });
   }
 
@@ -38,7 +27,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Center(child: Text('RSS Reader'))),
-      body: contentBody,
+      body: PageView(
+        controller: controller,
+        physics: const NeverScrollableScrollPhysics(),
+        children: pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: tabIndex,
         items: const [
