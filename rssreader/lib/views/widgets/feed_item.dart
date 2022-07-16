@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rssreader/models/feed.dart';
+import 'package:rssreader/utils/date_parser.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class FeedItem extends StatelessWidget {
@@ -13,41 +14,49 @@ class FeedItem extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Flexible(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Text(feed.source, textScaleFactor: 0.75),
                   Text(
-                    feed.title,
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    feed.description,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                  ),
+                      "- ${feed.pubDate.day} ${DateEspEn.monthName[feed.pubDate.month]} ${feed.pubDate.year} -",
+                      textScaleFactor: 0.75),
                 ],
               ),
             ),
-            Flexible(
-              flex: 1,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(18)),
-                child: SizedBox(
-                  height: 100,
-                  width: 300,
-                  child: feed.urlImage != null
-                      ? Image.network(feed.urlImage!, fit: BoxFit.cover)
-                      : Image.asset('assets/placeholder/pexels.jpg',
-                          fit: BoxFit.cover),
-                ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    flex: 2,
+                    child: Text(
+                      feed.title,
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(18)),
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: feed.urlImage != null
+                            ? Image.network(feed.urlImage!, fit: BoxFit.cover)
+                            : Image.asset('assets/placeholder/pexels.jpg',
+                                fit: BoxFit.cover),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

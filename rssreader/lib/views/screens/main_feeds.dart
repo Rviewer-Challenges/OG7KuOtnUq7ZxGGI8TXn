@@ -14,8 +14,10 @@ class MainFeedsScreen extends StatefulWidget {
 }
 
 class _MainFeedsScreenState extends State<MainFeedsScreen> {
+  int num = 15;
+
   Future<void> _refreshFeeds() async {
-    await widget.request.updateFeeds(20);
+    await widget.request.updateFeeds(num);
     setState(() {});
   }
 
@@ -25,7 +27,7 @@ class _MainFeedsScreenState extends State<MainFeedsScreen> {
       onRefresh: _refreshFeeds,
       child: widget.request.feeds.isEmpty
           ? FutureBuilder(
-              future: widget.request.getFeeds(),
+              future: widget.request.getFeeds(num),
               builder: (context, AsyncSnapshot<List<Feed>> snapshot) {
                 if (snapshot.hasData) {
                   return ListView.separated(
@@ -35,22 +37,22 @@ class _MainFeedsScreenState extends State<MainFeedsScreen> {
                     separatorBuilder: (BuildContext context, int index) =>
                         const Divider(
                       thickness: 4,
-                      indent: 32,
-                      endIndent: 32,
+                      indent: 24,
+                      endIndent: 24,
                     ),
                   );
                 }
                 return const Center(child: CircularProgressIndicator());
               })
           : ListView.separated(
-              itemCount: widget.request.getTop(20).length,
+              itemCount: widget.request.getTop(num).length,
               itemBuilder: (BuildContext context, int index) =>
                   FeedItem(feed: widget.request.getFeedAt(index)),
               separatorBuilder: (BuildContext context, int index) =>
                   const Divider(
                 thickness: 4,
-                indent: 32,
-                endIndent: 32,
+                indent: 24,
+                endIndent: 24,
               ),
             ),
     );

@@ -32,7 +32,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: _themeSwitch(theme),
         ),
         _currentSources(),
-        TextButton(onPressed: settings.restore, child: Text('Restaurar')),
       ],
     );
   }
@@ -59,13 +58,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     List<String> names = _sources.keys.toList();
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 64),
         child: Column(
           children: [
             const Text('SOURCES'),
             for (var name in names)
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(name),
                   Switch(
@@ -78,7 +77,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                   )
                 ],
-              )
+              ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OutlinedButton(
+                  onPressed: () => setState(() {
+                        settings.restore;
+                      }),
+                  child: const Text('Restaurar')),
+            ),
           ],
         ),
       ),

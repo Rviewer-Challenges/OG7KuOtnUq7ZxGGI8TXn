@@ -18,13 +18,7 @@ class FeedRequest {
   List<Feed> getTop(int topAmount) {
     List<Feed> listFeeds = feeds.values.toList();
     listFeeds.sort((a, b) => b.pubDate.compareTo(a.pubDate));
-    listFeeds.forEach((element) {
-      print(element.guid);
-    });
     top = listFeeds.sublist(0, min(topAmount, feeds.values.length));
-    top.forEach((element) {
-      print('Top ${element.guid}');
-    });
     return top;
   }
 
@@ -40,6 +34,12 @@ class FeedRequest {
         RegExp removeTags = RegExp(r'<[^>]*>');
 
         Iterable<xml.XmlElement?> items = rssDoc.findAllElements('item');
+        xml.XmlElement? srcImage = rssDoc
+            .getElement('rss')
+            ?.getElement('channel')
+            ?.getElement('image')
+            ?.getElement('url');
+        print(srcImage?.text);
         if (items.isNotEmpty) {
           for (int i = 0; i < min(amount, items.length); i++) {
             String? guid = items.elementAt(i)?.findElements('guid').first.text;
@@ -58,6 +58,7 @@ class FeedRequest {
                 items.elementAt(i)!.findElements('pubDate');
             feeds[guid] = Feed(
               guid: guid,
+              source: source.name,
               title: title.isNotEmpty
                   ? title.first?.text.replaceAll(removeTags, ' ')
                   : null,
@@ -66,7 +67,7 @@ class FeedRequest {
                   : null,
               urlImage: imageUri.isNotEmpty
                   ? imageUri.first?.getAttribute('url')
-                  : null,
+                  : srcImage?.text,
               link: link.isNotEmpty
                   ? link.first!.text.replaceAll(removeTags, ' ')
                   : '',

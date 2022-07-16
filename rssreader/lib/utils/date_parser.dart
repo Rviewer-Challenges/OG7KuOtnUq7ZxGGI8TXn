@@ -1,5 +1,5 @@
 class DateEspEn {
-  static Map<String, String> esp_en = {
+  static Map<String, String> espEn = {
     'lun': 'Mon',
     'mar': 'Tue',
     'mie': 'Wed',
@@ -20,9 +20,24 @@ class DateEspEn {
     '.': ''
   };
 
+  static Map<int, String> monthName = {
+    1: "Enero",
+    2: "Febrero",
+    3: "Marzo",
+    4: "Abril",
+    5: "Mayo",
+    6: "Junio",
+    7: "Julio",
+    8: "Agosto",
+    9: "Septiembre",
+    10: "Octubre",
+    11: "Noviembre",
+    12: "Diciembre",
+  };
+
   static parse(String string) {
-    for (var key in esp_en.keys) {
-      string = string.replaceAll(key, esp_en[key]!);
+    for (var key in espEn.keys) {
+      string = string.replaceAll(key, espEn[key]!);
     }
     return string;
   }
