@@ -25,7 +25,7 @@ class SettingPreferences {
     prefs.setBool(id, active);
   }
 
-  restore() {
-    prefs.clear();
+  Future<bool> restore() async {
+    return prefs.clear();
   }
 }

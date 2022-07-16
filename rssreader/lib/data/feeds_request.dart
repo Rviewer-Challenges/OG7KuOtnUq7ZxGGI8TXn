@@ -39,7 +39,6 @@ class FeedRequest {
             ?.getElement('channel')
             ?.getElement('image')
             ?.getElement('url');
-        print(srcImage?.text);
         if (items.isNotEmpty) {
           for (int i = 0; i < min(amount, items.length); i++) {
             String? guid = items.elementAt(i)?.findElements('guid').first.text;

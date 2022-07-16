@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rssreader/config/sources_config.dart';
-import 'package:rssreader/config/theme_data.dart';
+import 'package:rssreader/config/theme_brand.dart';
 import 'package:rssreader/providers/setting_preferences.dart';
 
 import '../../models/source.dart';
@@ -17,9 +17,14 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   SettingPreferences settings = SettingPreferences();
-  final Map<String, SourceFeed> _sources = <String, SourceFeed>{
-    for (SourceFeed src in sourcesConfig) src.name: src
-  };
+  late Map<String, SourceFeed> _sources = _load();
+
+  Map<String, SourceFeed> _load() {
+    return <String, SourceFeed>{
+      for (SourceFeed src in sourcesConfig) src.name: src
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeChanger theme = Provider.of<ThemeChanger>(context);
@@ -32,6 +37,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: _themeSwitch(theme),
         ),
         _currentSources(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: OutlinedButton(
+              onPressed: () async {
+                settings.restore.call().then((value) {
+                  if (value) {
+                    _sources.clear();
+                    for (var src in sourcesConfig) {
+                      src.active = settings.sourceIsActive(src.url);
+                    }
+                    _sources = _load();
+                    theme.setThemeData(settings.darkMode
+                        ? BrandThemeData.dark()
+                        : BrandThemeData.light());
+                    setState(() {});
+                  }
+                });
+              },
+              child: const Text('Reset')),
+        ),
       ],
     );
   }
@@ -78,14 +103,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   )
                 ],
               ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: OutlinedButton(
-                  onPressed: () => setState(() {
-                        settings.restore;
-                      }),
-                  child: const Text('Restaurar')),
-            ),
           ],
         ),
       ),

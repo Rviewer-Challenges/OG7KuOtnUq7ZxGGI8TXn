@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rssreader/config/sources_config.dart';
-import 'package:rssreader/config/theme_data.dart';
+import 'package:rssreader/config/theme_brand.dart';
 import 'package:rssreader/providers/setting_preferences.dart';
 
 import 'package:rssreader/providers/theme_provider.dart';

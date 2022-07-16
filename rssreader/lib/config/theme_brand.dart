@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class BrandThemeData {
   static final ThemeData _light = ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4FFAB6)),
+    primaryColor: Colors.green.shade900,
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.green.shade900),
   );
   static final ThemeData _dark = ThemeData.dark().copyWith(
     primaryColor: const Color(0xFF3D4158),

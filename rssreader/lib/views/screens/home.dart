@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:rssreader/views/screens/main_feeds.dart';
 import 'package:rssreader/views/screens/settings.dart';
