@@ -20,6 +20,25 @@ class Feed {
     _title = title;
   }
 
+  Feed.fromJson(Map<String, dynamic> json)
+      : guid = json['guid'],
+        source = json['source'],
+        _title = json['title'],
+        _description = json['description'],
+        _urlImage = json['urlImage'],
+        link = json['link'],
+        pubDate = DateTime.parse(json['pubDate']);
+
+  Map<String, dynamic> toJson() => {
+        'guid': guid,
+        'source': source,
+        'title': _title,
+        'description': _description,
+        'urlImage': _urlImage,
+        'link': link,
+        'pubDate': pubDate.toString(),
+      };
+
   String get description => _description ?? 'No description';
 
   String get title => _title ?? 'No Title';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rssreader/config/sources_config.dart';
+import 'package:rssreader/data/feeds_fav.dart';
 import 'package:rssreader/data/feeds_request.dart';
 
 import '../../models/feed.dart';
@@ -15,6 +16,7 @@ class MainFeedsScreen extends StatefulWidget {
 
 class _MainFeedsScreenState extends State<MainFeedsScreen> {
   int num = 15;
+  Map<String, Feed> feedFav = FeedFavourites().feeds;
 
   Future<void> _refreshFeeds() async {
     await widget.request.updateFeeds(num);
@@ -32,8 +34,9 @@ class _MainFeedsScreenState extends State<MainFeedsScreen> {
                 if (snapshot.hasData) {
                   return ListView.separated(
                     itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, int index) =>
-                        FeedItem(feed: snapshot.data![index]),
+                    itemBuilder: (BuildContext context, int index) => FeedItem(
+                        feed: snapshot.data![index],
+                        isFav: feedFav.containsKey(snapshot.data![index].guid)),
                     separatorBuilder: (BuildContext context, int index) =>
                         const Divider(
                       thickness: 4,
@@ -46,8 +49,11 @@ class _MainFeedsScreenState extends State<MainFeedsScreen> {
               })
           : ListView.separated(
               itemCount: widget.request.getTop(num).length,
-              itemBuilder: (BuildContext context, int index) =>
-                  FeedItem(feed: widget.request.getFeedAt(index)),
+              itemBuilder: (BuildContext context, int index) => FeedItem(
+                feed: widget.request.getFeedAt(index),
+                isFav:
+                    feedFav.containsKey(widget.request.getFeedAt(index).guid),
+              ),
               separatorBuilder: (BuildContext context, int index) =>
                   const Divider(
                 thickness: 4,

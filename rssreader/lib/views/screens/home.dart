@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rssreader/views/screens/favourite_feeds.dart';
 import 'package:rssreader/views/screens/main_feeds.dart';
 import 'package:rssreader/views/screens/settings.dart';
+
+import '../../data/feeds_fav.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,7 +17,11 @@ class _HomeState extends State<Home> {
   int tabIndex = 0;
   PageController controller = PageController(initialPage: 0);
 
-  List<Widget> pages = [MainFeedsScreen(), Container(), const SettingsScreen()];
+  List<Widget> pages = [
+    MainFeedsScreen(),
+    const FavouriteFeedsScreen(),
+    const SettingsScreen()
+  ];
 
   void _bodyChange(int index) {
     setState(() {
@@ -24,12 +31,18 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void dispose() async {
+    await FeedFavourites().saveFeeds();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Center(child: Text('RSS Reader'))),
       body: PageView(
         controller: controller,
-        physics: const NeverScrollableScrollPhysics(),
+        // physics: const NeverScrollableScrollPhysics(),
         children: pages,
       ),
       bottomNavigationBar: BottomNavigationBar(

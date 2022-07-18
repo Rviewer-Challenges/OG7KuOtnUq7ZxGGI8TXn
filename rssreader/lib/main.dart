@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rssreader/config/sources_config.dart';
 import 'package:rssreader/config/theme_brand.dart';
-import 'package:rssreader/providers/setting_preferences.dart';
+import 'package:rssreader/data/feeds_fav.dart';
+import 'package:rssreader/data/setting_preferences.dart';
 
 import 'package:rssreader/providers/theme_provider.dart';
 import 'package:rssreader/views/screens/home.dart';
@@ -12,7 +13,9 @@ import './config/sources_config.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final settings = SettingPreferences();
+  final feedFavourites = FeedFavourites();
   await settings.init();
+  await feedFavourites.getFeeds();
   for (var src in sourcesConfig) {
     src.active = settings.sourceIsActive(src.url);
   }
