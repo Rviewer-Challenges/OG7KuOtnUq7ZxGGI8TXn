@@ -1,0 +1,71 @@
+name: rssreader
+description: A RSS reader for game development.
+
+
+publish_to: 'none' 
+
+
+version: 1.0.0+1
+
+
+environment:
+  sdk: ">=2.17.5 <3.0.0"
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  provider: ^6.0.3
+  shared_preferences: ^2.0.15
+  http: ^0.13.4
+  xml: ^6.1.0
+  html: ^0.15.0
+  url_launcher: ^6.1.5
+  path_provider: ^2.0.11
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+
+flutter:
+  
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/placeholder/
+  
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
