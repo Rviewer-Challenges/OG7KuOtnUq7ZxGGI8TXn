@@ -12,23 +12,26 @@ class FeedDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(feed.source), centerTitle: true),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Text(feed.title, style: const TextStyle(fontSize: 20)),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: feed.urlImage != null
-                    ? Image.network(feed.urlImage!)
-                    : null,
-              ),
-              Text(
-                  "- ${feed.pubDate.day} ${DateEspEn.monthName[feed.pubDate.month]} ${feed.pubDate.year} -",
-                  textScaleFactor: 0.75),
-              Text(feed.description, style: const TextStyle(fontSize: 16))
-            ],
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 80.0, right: 8.0, left: 8.0),
+            child: Column(
+              children: [
+                Text(feed.title, style: const TextStyle(fontSize: 20)),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: feed.urlImage != null
+                      ? Image.network(feed.urlImage!)
+                      : null,
+                ),
+                Text(
+                    "- ${feed.pubDate.day} ${DateEspEn.monthName[feed.pubDate.month]} ${feed.pubDate.year} -",
+                    textScaleFactor: 0.75),
+                Text(feed.description, style: const TextStyle(fontSize: 16))
+              ],
+            ),
           ),
         ),
       ),

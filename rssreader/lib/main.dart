@@ -44,7 +44,7 @@ class MainScreen extends StatelessWidget {
     final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'RSS Reader',
+      title: 'Game Dev RSS',
       theme: theme.getThemeData(),
       home: const Home(),
     );

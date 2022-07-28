@@ -54,6 +54,8 @@ class _FeedItemState extends State<FeedItem> {
                       child: Text(
                         widget.feed.title,
                         style: const TextStyle(fontSize: 20),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 5,
                       ),
                     ),
                     Flexible(

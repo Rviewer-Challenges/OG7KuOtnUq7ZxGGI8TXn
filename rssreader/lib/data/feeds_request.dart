@@ -71,7 +71,7 @@ class FeedRequest {
                   ? link.first!.text.replaceAll(removeTags, ' ')
                   : '',
               pubDate: HttpDate.parse(DateEspEn.parse(pubdate.first!.text)
-                  .replaceFirst(RegExp(r'\+\d+'), 'GMT')),
+                  .replaceFirst(RegExp(r'(\+|-)\d+'), 'GMT')),
             );
           }
         }

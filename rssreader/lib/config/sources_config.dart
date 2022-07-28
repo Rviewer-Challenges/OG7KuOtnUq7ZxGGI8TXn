@@ -7,9 +7,8 @@ List<SourceFeed> sourcesConfig = [
     active: true,
   ),
   SourceFeed(
-    name: 'Ultra engine',
-    url:
-        'https://www.ultraengine.com/community/blogs/blog/rss/41-leadwerks-company-blog/',
+    name: 'Askgamedev',
+    url: 'https://askagamedev.tumblr.com/rss',
     active: true,
   ),
   SourceFeed(
@@ -20,6 +19,11 @@ List<SourceFeed> sourcesConfig = [
   SourceFeed(
     name: 'Unity Blogs',
     url: 'https://blog.unity.com/feed',
+    active: true,
+  ),
+  SourceFeed(
+    name: 'Game Wisdom',
+    url: 'https://game-wisdom.com/feed',
     active: true,
   )
 ];

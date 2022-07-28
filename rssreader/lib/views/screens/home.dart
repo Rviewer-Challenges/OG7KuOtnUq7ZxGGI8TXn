@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Center(child: Text('RSS Reader'))),
+      appBar: AppBar(title: const Center(child: Text('Game Dev RSS'))),
       body: PageView(
         controller: controller,
         // physics: const NeverScrollableScrollPhysics(),
